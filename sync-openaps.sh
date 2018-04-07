@@ -13,21 +13,25 @@ user="root"
 # servers - list of all rig hostnames or ip addresses with spaces in between
 servers="eddie2 fido0"
 
-file="/root/myopenaps/preferences.json"
+files="/root/myopenaps/preferences.json /root/.bash_profile"
 
 for server in $servers; do
+  for file in $files; do
     echo 
-    echo syncing $server to $(hostname)
+    echo syncing $file from $server to $(hostname)
     sshpass -p $RSYNC_PASSWD rsync -rtuzv ${user}@${server}:${file} ${file} 
     echo
+  done
 done
 
 echo
 echo 
 
 for server in $servers; do
+  for file in $files; do
     echo 
-    echo syncing $(hostname) to $server
+    echo syncing $file from $(hostname) to $server
     sshpass -p $RSYNC_PASSWD  rsync -rtuzv ${file} ${user}@${server}:${file}
     echo
+  done
 done
