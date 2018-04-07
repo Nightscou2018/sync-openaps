@@ -13,7 +13,7 @@ user="root"
 # servers - list of all rig hostnames or ip addresses with spaces in between
 servers="eddie2 fido0"
 
-file="/root/test/preferences.json"
+file="/root/myopenaps/preferences.json"
 
 for server in $servers; do
     echo 
