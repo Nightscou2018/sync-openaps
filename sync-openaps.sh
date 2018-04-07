@@ -13,10 +13,12 @@ user="root"
 # servers - list of all rig hostnames or ip addresses with spaces in between
 servers="eddie2 fido0"
 
+file="/root/test/preferences.json"
+
 for server in $servers; do
     echo 
     echo syncing $server to $(hostname)
-    sshpass -p $RSYNC_PASSWD rsync -rtuzv ${user}@${server}:/root/test /root/
+    sshpass -p $RSYNC_PASSWD rsync -rtuzv ${user}@${server}:${file} ${file} 
     echo
 done
 
@@ -26,6 +28,6 @@ echo
 for server in $servers; do
     echo 
     echo syncing $(hostname) to $server
-    sshpass -p $RSYNC_PASSWD  rsync -rtuzv /root/test ${user}@${server}:/root/
+    sshpass -p $RSYNC_PASSWD  rsync -rtuzv ${file} ${user}@${server}:${file}
     echo
 done
