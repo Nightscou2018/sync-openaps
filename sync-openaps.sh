@@ -8,24 +8,28 @@
 #
 epochdate=$(date +'%s')
 
-# user which is usually root
-user="root"
-
 # servers - list of all rig hostnames or ip addresses - add your own list of rigs here 
 servers="
-        eddie2
-        fido0
+        root@eddie2
+        eric@fido
 	"
 
 # servers - list of all files to sync - add your own list of filenames here 
+#files="
+#      ~/myopenaps/preferences.json
+#      ~/.bash_profile
+#      /etc/wpa_supplicant/wpa_supplicant.conf
+#      "
 files="
-      /root/myopenaps/preferences.json
-      /root/.bash_profile
+      myopenaps/preferences.json
       /etc/wpa_supplicant/wpa_supplicant.conf
+      .bash_profile
       "
 
+cd
+mkdir -p ./archive
 # save files just in case
-tar -czvf ./save-$epochdate.tar.gz $files
+tar -czvf ./archive/files-$epochdate.tar.gz $files
 
 for server in $servers; do
   for file in $files; do
@@ -37,7 +41,7 @@ for server in $servers; do
   for file in $files; do
     echo 
     echo syncing $file from $server to $(hostname)
-    sshpass -p $RSYNC_PASSWD rsync -rtuzv ${user}@${server}:${file} ${file} 
+    sshpass -p $RSYNC_PASSWD rsync -rtuzv ${server}:${file} ${file} 
     echo
   done
 done
@@ -49,7 +53,7 @@ for server in $servers; do
   for file in $files; do
     echo 
     echo syncing $file from $(hostname) to $server
-    sshpass -p $RSYNC_PASSWD  rsync -rtuzv ${file} ${user}@${server}:${file}
+    sshpass -p $RSYNC_PASSWD  rsync -rtuzv ${file} ${server}:${file}
     echo
   done
 done
