@@ -11,7 +11,6 @@ epochdate=$(date +'%s')
 # servers - list of all rig hostnames or ip addresses - add your own list of rigs here 
 servers="
         root@eddie2
-        eric@fido
         root@fido0
 	"
 
@@ -22,9 +21,11 @@ servers="
 #      /etc/wpa_supplicant/wpa_supplicant.conf
 #      "
 files="
-      myopenaps/preferences.json
+      /root/myopenaps/preferences.json
       /etc/wpa_supplicant/wpa_supplicant.conf
-      .bash_profile
+      /root/.bash_profile
+      /root/src/Lookout/calibrations.csv
+      /root/src/Lookout/calibration-linear.json
       "
 
 cd
@@ -57,4 +58,12 @@ for server in $servers; do
     sshpass -p $RSYNC_PASSWD  rsync -rtuzv ${file} ${server}:${file}
     echo
   done
+done
+
+for server in $servers; do
+    sshpass -p $RSYNC_PASSWD  rsync -rtuzv ${server}:/root/myopenaps/autotune /root/myopenaps
+done
+
+for server in $servers; do
+    sshpass -p $RSYNC_PASSWD  rsync -rtuzv /root/myopenaps/autotune ${server}:/root/myopenaps
 done
