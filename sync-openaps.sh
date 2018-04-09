@@ -12,6 +12,7 @@ epochdate=$(date +'%s')
 servers="
         root@eddie2
         eric@fido
+        root@fido0
 	"
 
 # servers - list of all files to sync - add your own list of filenames here 
