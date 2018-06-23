@@ -24,8 +24,8 @@ files="
       /root/myopenaps/preferences.json
       /etc/wpa_supplicant/wpa_supplicant.conf
       /root/.bash_profile
-      /root/src/Lookout/calibrations.csv
-      /root/src/Lookout/calibration-linear.json
+      /root/myopenaps/monitor/logger/calibrations.csv
+      /root/myopenaps/monitor/logger/calibration-linear.json
       "
 
 cd
